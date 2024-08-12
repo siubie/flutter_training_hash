@@ -35,28 +35,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 builder: (context, state) {
                   if (state is RegisterInitial) {
                     //add textformfield for name, email, password
-                    return Column(
-                      children: [
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Name',
-                          ),
-                          controller: nameController,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                          ),
-                          controller: emailController,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                          ),
-                          obscureText: true,
-                          controller: passwordController,
-                        ),
-                      ],
+                    return RegisterForm(
+                      nameController: nameController,
+                      emailController: emailController,
+                      passwordController: passwordController,
                     );
                   }
                   if (state is RegisterLoading) {
@@ -71,51 +53,91 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     );
                   }
-                  return Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Name',
-                        ),
-                        controller: nameController,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                        ),
-                        controller: emailController,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                        ),
-                        obscureText: true,
-                        controller: passwordController,
-                      ),
-                    ],
+                  return RegisterForm(
+                    nameController: nameController,
+                    emailController: emailController,
+                    passwordController: passwordController,
                   );
                 },
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    //call user tap register button event
-                    context.read<RegisterBloc>().add(
-                          UserTapRegisterButtonEvent(
-                            request: RegisterRequest(
-                              name: nameController!.text,
-                              email: emailController!.text,
-                              password: passwordController!.text,
-                            ),
-                          ),
-                        );
-                  },
-                  child: const Text('Register'),
-                ),
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  if (state is RegisterSuccess) {
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          //call user tap login button event
+                          context.read<RegisterBloc>().add(
+                                UserTapLoginButtonEvent(),
+                              );
+                        },
+                        child: const Text('Back To Login'),
+                      ),
+                    );
+                  }
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //call user tap register button event
+                        context.read<RegisterBloc>().add(
+                              UserTapRegisterButtonEvent(
+                                request: RegisterRequest(
+                                  name: nameController!.text,
+                                  email: emailController!.text,
+                                  password: passwordController!.text,
+                                ),
+                              ),
+                            );
+                      },
+                      child: const Text('Register'),
+                    ),
+                  );
+                },
               ),
             ],
           ),
         ));
+  }
+}
+
+class RegisterForm extends StatelessWidget {
+  const RegisterForm({
+    super.key,
+    required this.nameController,
+    required this.emailController,
+    required this.passwordController,
+  });
+
+  final TextEditingController? nameController;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Name',
+          ),
+          controller: nameController,
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Email',
+          ),
+          controller: emailController,
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Password',
+          ),
+          obscureText: true,
+          controller: passwordController,
+        ),
+      ],
+    );
   }
 }

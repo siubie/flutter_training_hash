@@ -12,6 +12,7 @@ class RegisterDatasource {
       param: request.toJson(),
       contentType: 'application/json',
     );
+
     if (response.statusCode == 201) {
       return Right(RegisterResponse.fromJson(response.data));
     } else {

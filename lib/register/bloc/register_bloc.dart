@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:new_shop/register/datasource/register_datasource.dart';
 import 'package:new_shop/register/request/register_request.dart';
@@ -10,6 +9,7 @@ part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterDatasource datasource;
+
   RegisterBloc(this.datasource) : super(RegisterInitial()) {
     on<UserTapRegisterButtonEvent>((event, emit) async {
       emit(RegisterLoading());
@@ -19,6 +19,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         (error) => emit(RegisterFailed()),
         (data) => emit(RegisterSuccess(data)),
       );
+    });
+
+    on<UserTapLoginButtonEvent>((event, emit) async {
+      emit(RegisterLoading());
+      await Future.delayed(const Duration(seconds: 2));
+      emit(RegisterInitial());
     });
   }
 }

@@ -15,3 +15,5 @@ final class UserTapRegisterButtonEvent extends RegisterEvent {
   @override
   List<Object> get props => [request];
 }
+
+final class UserTapLoginButtonEvent extends RegisterEvent {}
