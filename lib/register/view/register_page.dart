@@ -111,18 +111,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       onPressed: () {
-                        // if (_validate() != null && _validate()!) {
-                        //call user tap register button event
-                        context.read<RegisterBloc>().add(
-                              UserTapRegisterButtonEvent(
-                                request: RegisterRequest(
-                                  name: nameController!.text,
-                                  email: emailController!.text,
-                                  password: passwordController!.text,
+                        if (_validate() != null && _validate()!) {
+                          //call user tap register button event
+                          context.read<RegisterBloc>().add(
+                                UserTapRegisterButtonEvent(
+                                  request: RegisterRequest(
+                                    name: nameController!.text,
+                                    email: emailController!.text,
+                                    password: passwordController!.text,
+                                  ),
                                 ),
-                              ),
-                            );
-                        // }
+                              );
+                        }
                       },
                       child: const Text('Register'),
                     ),
