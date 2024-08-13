@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:new_shop/api_service.dart';
 import 'package:new_shop/login/request/login_request.dart';
-import 'package:new_shop/login/response/login_success.dart';
+import 'package:new_shop/login/response/login_success_response.dart';
 
 class LoginDatasource {
   Future<Either<String, LoginSuccessResponse>> login(
