@@ -1,0 +1,128 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validator/form_validator.dart';
+import 'package:new_shop/login/bloc/login_bloc.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController? emailController = TextEditingController(text: '');
+  TextEditingController? passwordController = TextEditingController(text: '');
+  GlobalKey<FormState> _form = GlobalKey<FormState>();
+
+  bool? _validate() {
+    return _form.currentState?.validate();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            BlocConsumer<LoginBloc, LoginState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                if (state is LoginInitial) {
+                  //add textformfield for name, email, password
+                  return LoginForm(
+                      form: _form,
+                      emailController: emailController,
+                      passwordController: passwordController);
+                }
+                if (state is LoginLoading) {
+                  return const CircularProgressIndicator();
+                }
+                return LoginForm(
+                  form: _form,
+                  emailController: emailController,
+                  passwordController: passwordController,
+                );
+              },
+            ),
+            BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) {
+                return SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_validate() != null && _validate()!) {}
+                    },
+                    child: const Text('Login'),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  const LoginForm({
+    super.key,
+    required GlobalKey<FormState> form,
+    required this.emailController,
+    required this.passwordController,
+  }) : _form = form;
+
+  final GlobalKey<FormState> _form;
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _form,
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(),
+            ),
+            validator: ValidationBuilder().email().build(),
+            controller: emailController,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Password',
+              border: OutlineInputBorder(),
+            ),
+            obscureText: true,
+            controller: passwordController,
+            validator: ValidationBuilder().minLength(5).maxLength(50).build(),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    );
+  }
+}

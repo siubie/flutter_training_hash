@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop/app_bloc_observer.dart';
+import 'package:new_shop/login/bloc/login_bloc.dart';
+import 'package:new_shop/login/datasource/login_datasource.dart';
+import 'package:new_shop/login/view/login_page.dart';
 import 'package:new_shop/register/bloc/register_bloc.dart';
 import 'package:new_shop/register/datasource/register_datasource.dart';
 import 'package:new_shop/register/view/register_page.dart';
@@ -15,8 +18,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegisterBloc(RegisterDatasource()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => RegisterBloc(RegisterDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(LoginDatasource()),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
