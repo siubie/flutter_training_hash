@@ -1,10 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:new_shop/api_service.dart';
 import 'package:new_shop/login/request/login_request.dart';
+import 'package:new_shop/login/response/login_failed_response.dart';
 import 'package:new_shop/login/response/login_success_response.dart';
+import 'package:new_shop/register/response/register_failed_response.dart';
 
 class LoginDatasource {
-  Future<Either<String, LoginSuccessResponse>> login(
+  Future<(LoginFailedResponse?, LoginSuccessResponse?)> login(
       LoginRequest request) async {
     try {
       final response = await APIService.instance.request(
@@ -14,13 +17,12 @@ class LoginDatasource {
         contentType: 'application/json',
       );
 
-      if (response.statusCode == 200) {
-        return Right(LoginSuccessResponse.fromJson(response.data));
-      } else {
-        return Left('Error');
-      }
-    } catch (e) {
-      return Left('Error');
+      return (
+        null,
+        LoginSuccessResponse.fromJson(response.data),
+      );
+    } on DioException catch (e) {
+      return (LoginFailedResponse.fromJson(e.response!.data), null);
     }
   }
 }
