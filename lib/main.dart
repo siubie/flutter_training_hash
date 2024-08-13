@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const LoginPage(),
           '/register': (context) => const RegisterPage(),
+          //tambah page
         },
       ),
     );

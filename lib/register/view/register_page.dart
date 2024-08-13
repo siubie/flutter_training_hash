@@ -52,10 +52,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: errorMessage!
-                              .map((e) => Text(
-                                    e,
-                                    style: const TextStyle(fontSize: 16),
-                                  ))
+                              .map(
+                                (e) => Text(
+                                  e,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              )
                               .toList(),
                         ),
                       ),
@@ -97,18 +99,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       onPressed: () {
-                        if (_validate() != null && _validate()!) {
-                          //call user tap register button event
-                          context.read<RegisterBloc>().add(
-                                UserTapRegisterButtonEvent(
-                                  request: RegisterRequest(
-                                    name: nameController!.text,
-                                    email: emailController!.text,
-                                    password: passwordController!.text,
-                                  ),
+                        // if (_validate() != null && _validate()!) {
+                        //call user tap register button event
+                        context.read<RegisterBloc>().add(
+                              UserTapRegisterButtonEvent(
+                                request: RegisterRequest(
+                                  name: nameController!.text,
+                                  email: emailController!.text,
+                                  password: passwordController!.text,
                                 ),
-                              );
-                        }
+                              ),
+                            );
+                        // }
                       },
                       child: const Text('Register'),
                     ),
