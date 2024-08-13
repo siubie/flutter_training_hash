@@ -7,4 +7,11 @@ sealed class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class UserTapLoginButtonEvent extends LoginEvent {}
+final class UserTapLoginButtonEvent extends LoginEvent {
+  final LoginRequest request;
+
+  const UserTapLoginButtonEvent({required this.request});
+
+  @override
+  List<Object> get props => [request];
+}

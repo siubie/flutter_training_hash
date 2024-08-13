@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:new_shop/login/bloc/login_bloc.dart';
+import 'package:new_shop/login/request/login_request.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,8 +14,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController? emailController = TextEditingController(text: '');
-  TextEditingController? passwordController = TextEditingController(text: '');
+  TextEditingController? emailController =
+      TextEditingController(text: 'ppa@ppa.com');
+  TextEditingController? passwordController =
+      TextEditingController(text: 'password');
   GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   bool? _validate() {
@@ -33,7 +36,12 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                //if state is LoginSuccess then navigate to /home
+                if (state is LoginSuccess) {
+                  Navigator.of(context).pushNamed('/home');
+                }
+              },
               builder: (context, state) {
                 if (state is LoginInitial) {
                   //add textformfield for name, email, password
@@ -42,8 +50,11 @@ class _LoginPageState extends State<LoginPage> {
                       emailController: emailController,
                       passwordController: passwordController);
                 }
+                //if state is login loading then show loading
                 if (state is LoginLoading) {
-                  return const CircularProgressIndicator();
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
                 return LoginForm(
                   form: _form,
@@ -68,7 +79,17 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () {
-                          if (_validate() != null && _validate()!) {}
+                          if (_validate() != null && _validate()!) {
+                            //call user tap login button event
+                            context.read<LoginBloc>().add(
+                                  UserTapLoginButtonEvent(
+                                    request: LoginRequest(
+                                      email: emailController!.text,
+                                      password: passwordController!.text,
+                                    ),
+                                  ),
+                                );
+                          }
                         },
                         child: const Text('Login'),
                       ),

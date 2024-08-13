@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop/app_bloc_observer.dart';
+import 'package:new_shop/home/view/home_page.dart';
 import 'package:new_shop/login/bloc/login_bloc.dart';
 import 'package:new_shop/login/datasource/login_datasource.dart';
 import 'package:new_shop/login/view/login_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const LoginPage(),
           '/register': (context) => const RegisterPage(),
+          '/home': (context) => const HomePage(),
           //tambah page
         },
       ),

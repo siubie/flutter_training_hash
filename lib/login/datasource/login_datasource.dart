@@ -1,10 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:new_shop/api_service.dart';
 import 'package:new_shop/login/request/login_request.dart';
 import 'package:new_shop/login/response/login_failed_response.dart';
 import 'package:new_shop/login/response/login_success_response.dart';
-import 'package:new_shop/register/response/register_failed_response.dart';
 
 class LoginDatasource {
   Future<(LoginFailedResponse?, LoginSuccessResponse?)> login(
@@ -22,7 +20,10 @@ class LoginDatasource {
         LoginSuccessResponse.fromJson(response.data),
       );
     } on DioException catch (e) {
-      return (LoginFailedResponse.fromJson(e.response!.data), null);
+      return (
+        LoginFailedResponse.fromJson(e.response!.data),
+        null,
+      );
     }
   }
 }
