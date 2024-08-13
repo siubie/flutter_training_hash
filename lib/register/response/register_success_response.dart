@@ -4,13 +4,13 @@
 
 import 'dart:convert';
 
-RegisterResponse registerResponseFromJson(String str) =>
-    RegisterResponse.fromJson(json.decode(str));
+RegisterSuccessResponse registerResponseFromJson(String str) =>
+    RegisterSuccessResponse.fromJson(json.decode(str));
 
-String registerResponseToJson(RegisterResponse data) =>
+String registerResponseToJson(RegisterSuccessResponse data) =>
     json.encode(data.toJson());
 
-class RegisterResponse {
+class RegisterSuccessResponse {
   String? email;
   String? password;
   String? name;
@@ -20,7 +20,7 @@ class RegisterResponse {
   DateTime? creationAt;
   DateTime? updatedAt;
 
-  RegisterResponse({
+  RegisterSuccessResponse({
     this.email,
     this.password,
     this.name,
@@ -31,7 +31,7 @@ class RegisterResponse {
     this.updatedAt,
   });
 
-  RegisterResponse copyWith({
+  RegisterSuccessResponse copyWith({
     String? email,
     String? password,
     String? name,
@@ -41,7 +41,7 @@ class RegisterResponse {
     DateTime? creationAt,
     DateTime? updatedAt,
   }) =>
-      RegisterResponse(
+      RegisterSuccessResponse(
         email: email ?? this.email,
         password: password ?? this.password,
         name: name ?? this.name,
@@ -52,8 +52,8 @@ class RegisterResponse {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
-      RegisterResponse(
+  factory RegisterSuccessResponse.fromJson(Map<String, dynamic> json) =>
+      RegisterSuccessResponse(
         email: json["email"],
         password: json["password"],
         name: json["name"],

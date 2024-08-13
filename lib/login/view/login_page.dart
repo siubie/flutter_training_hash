@@ -100,7 +100,18 @@ class _LoginPageState extends State<LoginPage> {
     if (result != null) {
       ScaffoldMessenger.of(context)
         ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text('$result')));
+        ..showSnackBar(
+          SnackBar(
+            content: Text('$result'),
+            action: SnackBarAction(
+              label: 'Close',
+              onPressed: () {
+                // Code to execute when the action is pressed
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
     }
   }
 }
