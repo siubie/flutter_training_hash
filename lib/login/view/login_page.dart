@@ -75,7 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     //add text button for register
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _navigateAndWaitForResult(context);
+                      },
                       child: const Text('Register'),
                     ),
                   ],
@@ -86,6 +88,20 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _navigateAndWaitForResult(BuildContext context) async {
+    //await for navigator push named
+    final result = await Navigator.of(context).pushNamed('/register');
+    if (!context.mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    if (result != null) {
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text('$result')));
+    }
   }
 }
 

@@ -40,7 +40,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   //if register success
                   if (state is RegisterSuccess) {
                     //navigate to /
-                    Navigator.of(context).pop(true);
+                    Navigator.of(context)
+                        .pop("Register Success, You can login now");
                     //add event to login bloc
                   }
                   //if register failed
