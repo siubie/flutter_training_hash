@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:new_shop/login/bloc/login_bloc.dart';
 import 'package:new_shop/register/bloc/register_bloc.dart';
 import 'package:new_shop/register/request/register_request.dart';
 
@@ -36,6 +37,13 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               BlocConsumer<RegisterBloc, RegisterState>(
                 listener: (context, state) {
+                  //if register success
+                  if (state is RegisterSuccess) {
+                    //navigate to /
+                    Navigator.of(context).pop(true);
+                    //add event to login bloc
+                  }
+                  //if register failed
                   if (state is RegisterFailed) {
                     final List<String>? errorMessage = state.response.message;
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -66,15 +74,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (state is RegisterLoading) {
                     return const CircularProgressIndicator();
                   }
-                  if (state is RegisterSuccess) {
-                    return Column(
-                      children: [
-                        const Text('Register Success'),
-                        Text('Name: ${state.response.name}'),
-                        Text('Email: ${state.response.email}'),
-                      ],
-                    );
-                  }
                   return RegisterForm(
                     form: _form,
                     nameController: nameController,
@@ -85,20 +84,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               BlocBuilder<RegisterBloc, RegisterState>(
                 builder: (context, state) {
-                  if (state is RegisterSuccess) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          //call back to registration page
-                          context
-                              .read<RegisterBloc>()
-                              .add(UserTapLoginButtonEvent());
-                        },
-                        child: const Text('Back To Registration'),
-                      ),
-                    );
-                  }
                   return SizedBox(
                     height: 50,
                     width: double.infinity,

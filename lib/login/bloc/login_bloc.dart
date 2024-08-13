@@ -8,8 +8,6 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginDatasource _datasource;
   LoginBloc(this._datasource) : super(LoginInitial()) {
-    on<LoginEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<LoginEvent>((event, emit) {});
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
@@ -31,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 if (state is LoginInitial) {
                   //add textformfield for name, email, password
@@ -54,22 +54,31 @@ class _LoginPageState extends State<LoginPage> {
             ),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
-                return SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (_validate() != null && _validate()!) {}
+                        },
+                        child: const Text('Login'),
                       ),
                     ),
-                    onPressed: () {
-                      if (_validate() != null && _validate()!) {}
-                    },
-                    child: const Text('Login'),
-                  ),
+                    //add text button for register
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Register'),
+                    ),
+                  ],
                 );
               },
             ),

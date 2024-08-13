@@ -23,11 +23,5 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         emit(RegisterFailed(response: response as RegisterFailedResponse));
       }
     });
-
-    on<UserTapLoginButtonEvent>((event, emit) async {
-      emit(RegisterLoading());
-      await Future.delayed(const Duration(seconds: 2));
-      emit(RegisterInitial());
-    });
   }
 }

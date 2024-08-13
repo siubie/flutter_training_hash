@@ -8,3 +8,12 @@ sealed class LoginEvent extends Equatable {
 }
 
 final class UserTapLoginButtonEvent extends LoginEvent {}
+
+final class UserSuccessfullyRegisteredEvent extends LoginEvent {
+  final String message;
+
+  const UserSuccessfullyRegisteredEvent({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
