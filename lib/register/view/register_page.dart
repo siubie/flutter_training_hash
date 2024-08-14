@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:new_shop/login/bloc/login_bloc.dart';
 import 'package:new_shop/register/bloc/register_bloc.dart';
 import 'package:new_shop/register/request/register_request.dart';
 
