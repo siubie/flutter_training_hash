@@ -25,6 +25,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    //add event to login bloc
+    context.read<LoginBloc>().add(SystemCheckTokenEvent());
+  }
+
+  @override
+  void dispose() {
+    emailController!.dispose();
+    passwordController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

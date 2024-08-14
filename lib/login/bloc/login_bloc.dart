@@ -14,6 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final TokenDatasource _tokenDatasource;
   LoginBloc(this._datasource, this._tokenDatasource) : super(LoginInitial()) {
     on<LoginEvent>((event, emit) {});
+
     on<UserTapLoginButtonEvent>((event, emit) async {
       emit(LoginLoading());
       final (LoginFailedResponse? failed, LoginSuccessResponse? success) =
@@ -24,6 +25,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginSuccess());
       } else {
         emit(LoginFailed());
+      }
+    });
+
+    on<SystemCheckTokenEvent>((event, emit) async {
+      final token = await _tokenDatasource.getToken();
+      if (token != null) {
+        emit(LoginSuccess());
+      } else {
+        emit(LoginInitial());
       }
     });
   }

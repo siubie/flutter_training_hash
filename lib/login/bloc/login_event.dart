@@ -15,3 +15,6 @@ final class UserTapLoginButtonEvent extends LoginEvent {
   @override
   List<Object> get props => [request];
 }
+
+//add event to check if token already available
+final class SystemCheckTokenEvent extends LoginEvent {}
