@@ -21,6 +21,7 @@ class APIService {
     Map<String, dynamic>? param,
     String? contentType,
     formData,
+    Map<String, String>? headers, // Step 1: Add headers parameter
   }) async {
     try {
       final dio = Dio(
@@ -28,7 +29,9 @@ class APIService {
           baseUrl: baseUrl,
           contentType: contentType ?? Headers.formUrlEncodedContentType,
           headers: {
+            // Default headers
             // HttpHeaders.authorizationHeader: 'Bearer $token',
+            if (headers != null) ...headers, // Step 2: Merge custom headers
           },
         ),
       );
