@@ -55,6 +55,24 @@ class _LoginPageState extends State<LoginPage> {
                 if (state is LoginSuccess) {
                   Navigator.of(context).pushNamed('/home');
                 }
+
+                if (state is LoginFailed) {
+                  //show snackbar
+                  ScaffoldMessenger.of(context)
+                    ..removeCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(
+                        content: Text('${state.message}'),
+                        action: SnackBarAction(
+                          label: 'Close',
+                          onPressed: () {
+                            // Code to execute when the action is pressed
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          },
+                        ),
+                      ),
+                    );
+                }
               },
               builder: (context, state) {
                 if (state is LoginInitial) {
@@ -70,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: CircularProgressIndicator(),
                   );
                 }
+
                 return LoginForm(
                   form: _form,
                   emailController: emailController,

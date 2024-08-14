@@ -24,7 +24,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await _tokenDatasource.saveToken(success.accessToken!);
         emit(LoginSuccess());
       } else {
-        emit(LoginFailed());
+        emit(
+          LoginFailed(
+              message: "Login failed, please check your email/password"),
+        );
       }
     });
 
