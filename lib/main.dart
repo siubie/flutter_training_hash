@@ -7,6 +7,7 @@ import 'package:new_shop/login/bloc/login_bloc.dart';
 import 'package:new_shop/login/datasource/login_datasource.dart';
 import 'package:new_shop/login/view/login_page.dart';
 import 'package:new_shop/product/bloc/product_bloc.dart';
+import 'package:new_shop/product/datasource/product_datasource.dart';
 import 'package:new_shop/register/bloc/register_bloc.dart';
 import 'package:new_shop/register/datasource/register_datasource.dart';
 import 'package:new_shop/register/view/register_page.dart';
@@ -43,7 +44,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => ProductBloc(),
+          create: (context) => ProductBloc(
+            ProductDatasource(),
+          ),
         ),
       ],
       child: MaterialApp(

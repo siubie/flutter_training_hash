@@ -50,18 +50,19 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
                   if (productState is ProductLoaded) {
-                    return Text("Product Here");
-                    // return ListView.builder(
-                    //   shrinkWrap: true,
-                    //   itemCount: state.products.length,
-                    //   itemBuilder: (context, index) {
-                    //     final product = state.products[index];
-                    //     return ListTile(
-                    //       title: Text(product.name),
-                    //       subtitle: Text(product.price.toString()),
-                    //     );
-                    //   },
-                    // );
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: productState.products.length,
+                        itemBuilder: (context, index) {
+                          final product = productState.products[index];
+                          return ListTile(
+                            title: Text(product.title!),
+                            subtitle: Text(product.price.toString()),
+                          );
+                        },
+                      ),
+                    );
                   }
                   return const SizedBox();
                 }),
