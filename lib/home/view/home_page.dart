@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_shop/home/bloc/home_bloc.dart';
+import 'package:new_shop/product/bloc/product_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    //add event to product bloc
+    context.read<ProductBloc>().add(SystemLoadProductEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +42,30 @@ class _HomePageState extends State<HomePage> {
             }
             return Column(
               children: [
-                const Text('Home Page'),
+                BlocBuilder<ProductBloc, ProductState>(
+                    builder: (context, productState) {
+                  if (productState is ProductLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (productState is ProductLoaded) {
+                    return Text("Product Here");
+                    // return ListView.builder(
+                    //   shrinkWrap: true,
+                    //   itemCount: state.products.length,
+                    //   itemBuilder: (context, index) {
+                    //     final product = state.products[index];
+                    //     return ListTile(
+                    //       title: Text(product.name),
+                    //       subtitle: Text(product.price.toString()),
+                    //     );
+                    //   },
+                    // );
+                  }
+                  return const SizedBox();
+                }),
+                //add product list
                 //add logout button
                 SizedBox(
                   width: double.infinity,
@@ -50,6 +81,12 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //add event to home bloc
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
