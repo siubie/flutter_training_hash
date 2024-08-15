@@ -99,6 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                 return Column(
                   children: [
                     SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
