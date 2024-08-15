@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:new_shop/product/response/product_success_response.dart';
 
@@ -14,12 +15,21 @@ class ProductItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //add product image
-            Image.network(
-              product.images![0],
-              width: double.infinity,
-              height: 200.0,
-              fit: BoxFit.cover,
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: product.images!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      product.images![index],
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+              ),
             ),
             Text(
               product.title!,
