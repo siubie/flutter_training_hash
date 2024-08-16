@@ -26,27 +26,19 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => RegisterBloc(
-            RegisterDatasource(),
-          ),
+          create: (context) => RegisterBloc(RegisterDatasource()),
         ),
         BlocProvider(
           create: (context) => LoginBloc(
             LoginDatasource(),
             TokenDatasource(),
-          )..add(
-              SystemCheckTokenEvent(),
-            ),
+          )..add(SystemCheckTokenEvent()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(
-            TokenDatasource(),
-          ),
+          create: (context) => HomeBloc(TokenDatasource()),
         ),
         BlocProvider(
-          create: (context) => ProductBloc(
-            ProductDatasource(),
-          ),
+          create: (context) => ProductBloc(ProductDatasource()),
         ),
       ],
       child: MaterialApp(
